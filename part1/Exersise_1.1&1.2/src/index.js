@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 {
-  /*This code is part1-1.2/step1*/
+  /*This code is part1<1.2>/step2*/
 }
 
 const App = () => {
