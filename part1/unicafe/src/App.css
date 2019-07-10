@@ -13,7 +13,7 @@ body {
 }
 .App {
   color: rgb(158, 28, 209);
-  font-size: 3rem;
+  font-size: 2rem;
 }
 .good {
   width: 20%;
@@ -48,7 +48,7 @@ body {
 }
 .b {
   color: red;
-  border-bottom: 1px red solid;
+  border-bottom: 1px green solid;
 }
 
 button {
