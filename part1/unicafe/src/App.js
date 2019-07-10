@@ -4,26 +4,31 @@ import ReactDOM from "react-dom";
 import "./App.css";
 
 const Statistics = ({ bad, good, neutral }) => {
-  return (
-    <div>
-      good:<span className="g">{good}</span> neutral:
-      <span className="n">{neutral}</span> bad:<span className="b"> {bad}</span>{" "}
-      <span className="n">result: {good + neutral + bad}</span>
-      <span className="n">
+  if (good == 0 && bad == 0 && neutral == 0) {
+    return "No Feedback given!";
+  } else {
+    return (
+      <div>
+        good:<span className="g">{good}</span> neutral:
+        <span className="n">{neutral}</span> bad:
+        <span className="b"> {bad}</span>{" "}
+        <span className="n">result: {good + neutral + bad}</span>
+        <span className="n">
+          <br />
+          avarege:
+          {typeof parseFloat(
+            (good * 1 + neutral * 0 + bad * -1) / (good + neutral + bad)
+          ) === NaN
+            ? 0
+            : (good * 1 + neutral * 0 + bad * -1) / (good + neutral + bad)}
+        </span>
         <br />
-        avarege:
-        {typeof parseFloat(
-          (good * 1 + neutral * 0 + bad * -1) / (good + neutral + bad)
-        ) === NaN
-          ? 0
-          : (good * 1 + neutral * 0 + bad * -1) / (good + neutral + bad)}
-      </span>
-      <br />
-      <span className="g">
-        Positive:{parseFloat((good / (good + neutral + bad)) * 100)}%
-      </span>
-    </div>
-  );
+        <span className="g">
+          Positive:{parseFloat((good / (good + neutral + bad)) * 100)}%
+        </span>
+      </div>
+    );
+  }
 };
 
 const App = () => {
@@ -57,6 +62,8 @@ const App = () => {
         Bad
       </button>
       <hr />
+      <h2>Statistics</h2>
+      {}
       <Statistics good={good} bad={bad} neutral={neutral} />
     </div>
   );
