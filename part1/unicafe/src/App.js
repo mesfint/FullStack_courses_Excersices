@@ -3,30 +3,6 @@ import ReactDOM from "react-dom";
 
 import "./App.css";
 
-// const Statistics = ({ bad, good, neutral }) => {
-
-//   if (good == 0 && bad == 0 && neutral == 0) {
-//     return "No Feedback given!";
-//   } else {
-//     return (
-//       <div>
-
-//           avarege:
-//           {typeof parseFloat(
-//             (good * 1 + neutral * 0 + bad * -1) / (good + neutral + bad)
-//           ) === NaN
-//             ? 0
-//             : (good * 1 + neutral * 0 + bad * -1) / (good + neutral + bad)}
-//         </span>
-//         <br />
-//         <span className="g">
-//           Positive:{parseFloat((good / (good + neutral + bad)) * 100)}%
-//         </span>
-//       </div>
-//     );
-//   }
-// };
-
 const Statistic = ({ text, value, className }) => {
   if (text === "positive") {
     return (
