@@ -2,32 +2,88 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+body {
+  border: 1px solid blueviolet;
+  box-shadow: 0 1px 0 red;
+  margin: 0 auto;
+  margin-top: 47px;
+  height: 360px;
+  width: 75%;
+  padding-bottom: 16rem;
+}
+.App {
+  color: rgb(158, 28, 209);
+  font-size: 2rem;
+}
+.good {
+  width: 20%;
+  height: 60px;
+  background-color: green;
+  font-size: 1.5rem;
+}
+.neutral {
+  width: 20%;
+  height: 60px;
+  background-color: rgb(240, 240, 11);
+  font-size: 1.5rem;
+}
+.bad {
+  width: 20%;
+  height: 60px;
+  background-color: red;
+  font-size: 1.5rem;
+}
+.g {
+  color: green;
+}
+.g,
+.b,
+.n {
+  margin-top: -4rem;
+}
+.n {
+  color: rgb(109, 109, 5);
+}
+.b {
+  color: red;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+button {
+  margin-right: 1rem;
+  color: rgb(82, 78, 78);
 }
 
-.App-link {
-  color: #61dafb;
+/*Table style*/
+.table {
+  border-collapse: collapse;
+  border: 2px solid rgb(200, 200, 200);
+  letter-spacing: 1px;
+  font-size: 1rem;
+  margin: 0 auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+td,
+th {
+  border: 1px solid rgb(190, 190, 190);
+  padding: 10px 20px;
+}
+
+th {
+  background-color: rgb(235, 235, 235);
+}
+
+td {
+  text-align: center;
+}
+
+tr:nth-child(even) td {
+  background-color: rgb(250, 250, 250);
+}
+
+tr:nth-child(odd) td {
+  background-color: rgb(245, 245, 245);
+}
+
+caption {
+  padding: 10px;
 }
