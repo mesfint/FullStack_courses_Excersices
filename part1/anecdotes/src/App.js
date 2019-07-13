@@ -1,53 +1,46 @@
-import React,{ useState  } from 'react';
-import ReactDOM from 'react-dom'
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
 import './App.css';
 
+const App = props => {
+  const [selected, setSelected] = useState(0);
+  const [points, setPoints] = useState(Array(anecdotes.length).fill(0));
 
-
-const  App = (props) => {
-  const [selected, setSelected] = useState();
-  //const name = prompt(`Please name`);
-  //Update state
-  //setSelected();
-
-  const anecdotes = [
-    'If it hurts, do it more often',
-    'Adding manpower to a late software project makes it later!',
-    'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
-    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
-    'Premature optimization is the root of all evil.',
-    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
-  ]
-  
-
-  const getRandomQoute = () =>{
-    //console.log('You wish');
-  
-  let i = (Math.round(Math.random() * 6) +1);
-  const randomQuote = anecdotes[i];
-      return  setSelected(randomQuote);
-
-  
-  //console.log(randomQuote);
-   
-  }
-
+  const handlePoints = () => {
+    const copy = points.map((point, i) => (i === selected ? point + 1 : point));
+    setPoints(copy);
+  };
 
   return (
     <div className="App">
-    
-      <span className="quotes">{selected}</span>
-      <br />
+      <p className="quotes">{props.anecdotes[selected]}</p>
+      <p className="threeVote">
+        has <span className="voteValue">{points[selected]}</span> votes
+      </p>
+      <button className="voteButton"
+       onClick={handlePoints}>vote</button>
       <button
-      
-      onClick={getRandomQoute}
+      className="randomButton" 
+        onClick={
+          () => setSelected(() => Math.floor(Math.random() * anecdotes.length)) // or just Math.floor(Math.random() * anecdotes.length)
+        }
       >
-        Next Anecdotes
+        next anecdotes
       </button>
-
+      <h3>Anecdotes with most Vote</h3>
+      {anecdotes[points.indexOf(Math.max.apply(Math, points))]}
+      <div>{Math.max.apply(Math, points)}</div>
     </div>
   );
-}
+};
 
+const anecdotes = [
+  "If it hurts, do it more often",
+  "Adding manpower to a late software project makes it later!",
+  "The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.",
+  "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
+  "Premature optimization is the root of all evil.",
+  "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it."
+];
 
-export default App;
+ReactDOM.render(<App anecdotes={anecdotes} />, document.getElementById("root"));
