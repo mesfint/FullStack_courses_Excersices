@@ -1,6 +1,15 @@
 .App {
 }
+.title {
+  margin-left: 2rem;
+}
 
 li {
   list-style: none;
+  line-height: 1.5rem;
+}
+
+.total {
+  margin-left: 2rem;
+  font-size: 1.5rem;
 }

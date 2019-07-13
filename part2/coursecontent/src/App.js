@@ -18,6 +18,11 @@ const course = {
       name: "State of a component",
       exercises: 14,
       id: 3
+    },
+    {
+      name: "Redux",
+      exercises: 11,
+      id: 4
     }
   ]
 };
@@ -31,16 +36,17 @@ const App = () => {
 };
 
 const Course = ({ item }) => {
+  const itelList = item.map(i => (
+    <li key={i.id}>
+      {i.name} {i.exercises}
+    </li>
+  ));
+  const sum = item.map(i => i.exercises).reduce((a, b) => a + b);
   return (
     <div>
-      <h1>{course.name}</h1>
-      <ul>
-        {item.map(i => (
-          <li key={i.id}>
-            {i.name} {i.exercises}
-          </li>
-        ))}
-      </ul>
+      <h1 className="title">{course.name}</h1>
+      <ul>{itelList}</ul>
+      <h3 className="total">total of {sum} exercises</h3>
     </div>
   );
 };
