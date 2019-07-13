@@ -4,13 +4,16 @@ import './App.css';
 
 const App = props => {
   const [selected, setSelected] = useState(0);
+  //Add the points/votes into array 
   const [points, setPoints] = useState(Array(anecdotes.length).fill(0));
 
   const handlePoints = () => {
+    //copy the selected quote into state
     const copy = points.map((point, i) => (i === selected ? point + 1 : point));
     setPoints(copy);
   };
 
+ 
   return (
     <div className="App">
       <p className="quotes">{props.anecdotes[selected]}</p>
