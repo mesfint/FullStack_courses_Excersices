@@ -1,4 +1,6 @@
 import React from "react";
+import Course from './components/Course';
+
 import "./App.css";
 
 const courses = [
@@ -51,29 +53,12 @@ const App = () => {
   const elements = courses.map(item => <Course key={item.id} item={item} />);
   return (
     <div className="App">
-      <h1>Web development curriclum</h1>
+      <h1>Web development curriculum</h1>
       {elements}
     </div>
   );
 };
 
-const Course = ({ item }) => {
-  //console.log("item", item);
-  const sum = item.parts.reduce((a, b) => a + b.exercises, 0);
 
-  const itemList = item.parts.map(i => (
-    <li key={i.id}>
-      {i.name} {i.exercises}
-    </li>
-  ));
-
-  return (
-    <div>
-      <h3 className="courseName">{item.name}</h3>
-      <ul>{itemList}</ul>
-      <h3 className="total">total of {sum} exercises</h3>
-    </div>
-  );
-};
 
 export default App;
