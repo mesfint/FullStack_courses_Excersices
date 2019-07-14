@@ -36,7 +36,7 @@ const App = () => {
 };
 
 const Course = ({ item }) => {
-  const itelList = item.map(i => (
+  const itemList = item.map(i => (
     <li key={i.id}>
       {i.name} {i.exercises}
     </li>
@@ -45,7 +45,7 @@ const Course = ({ item }) => {
   return (
     <div>
       <h1 className="title">{course.name}</h1>
-      <ul>{itelList}</ul>
+      <ul>{itemList}</ul>
       <h3 className="total">total of {sum} exercises</h3>
     </div>
   );
