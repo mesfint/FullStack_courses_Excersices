@@ -28,18 +28,22 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>Phonebook</h1>
+      <h1 className="phonebook">Phonebook</h1>
 
       <form onSubmit={handleSubmit}>
         name:
         <input
+          className="inputName"
           type="text"
           value={newName}
           onChange={e => setNewName(e.target.value)}
         />
-        <button type="submit">Add</button>
+        <br />
+        <button type="submit" className="add">
+          Add
+        </button>
       </form>
-      {personArray}
+      <div className="list">{personArray}</div>
     </div>
   );
 };
