@@ -17,17 +17,31 @@ form {
   height: 30px;
   color: blueviolet;
   font-size: 1rem;
+  margin-left: 31px;
+}
+.inputNumber {
+  border: 1px blueviolet solid;
+  margin: 10px;
+  width: 140px;
+  height: 30px;
+  color: blueviolet;
+  font-size: 1rem;
 }
 .add {
-  margin-left: 52px;
+  margin-left: 73px;
   color: blueviolet;
   width: 146px;
   height: 25px;
   font-size: 1rem;
-  margin-bottom: 15px;
+  margin-bottom: -4px;
 }
 .list {
-  margin-left: 588px;
+  margin-left: 597px;
   list-style: none;
   text-align: left;
+  width: 50%;
+}
+
+h2 {
+  margin-bottom: 6px;
 }
