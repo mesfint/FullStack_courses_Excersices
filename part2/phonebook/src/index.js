@@ -1,9 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 
 
-ReactDOM.render(<App />, document.getElementById('root'));
 
+
+// axios.get('http://localhost:3001/persons')
+//    .then(response =>{
+//     const persons = response.name;
+
+//             //console.log(persons);
+//             ReactDOM.render(
+//             <App persons={persons}/>,
+
+//            document.getElementById('root')
+           
+//            );
+
+            
+//         })
+
+
+
+ReactDOM.render(<App />,document.getElementById('root')
+)
 

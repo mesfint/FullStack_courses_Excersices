@@ -4,6 +4,7 @@
 .phonebook {
   text-size: 2rem;
   color: blueviolet;
+  margin-left: 52px;
 }
 form {
   font-size: 1rem;
@@ -49,7 +50,7 @@ form {
   margin-bottom: -4px;
 }
 .list {
-  margin-left: 597px;
+  margin-left: 581px;
   list-style: none;
   text-align: left;
   width: 50%;
@@ -57,7 +58,9 @@ form {
 
 h2 {
   margin-bottom: 6px;
+  margin-left: 4px;
 }
 h3 {
   margin-top: 6px;
+  margin-left: 26px;
 }
