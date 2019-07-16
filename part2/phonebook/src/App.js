@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import Filter  from './components/Filter';
+import PersonForm from './components/PersonForm';
+import Persons from './components/Persons';
 import "./App.css";
 
 const App = (props) => {
@@ -13,10 +16,17 @@ const App = (props) => {
 
   //The newName state is meant
   //for controlling the form input element.
-  const [newName, setNewName] = useState("");
+  const [newName, setNewName] = useState(" ");
   const [newNumber, setNewNumber] = useState('0000');
-  const [search, setSearch] = useState(' ');
+  const [search, setSearch] = useState(" ");
   //Submit name
+    //HandleFilter
+    const handleFilter = (e)=>{ setSearch(e.target.value)}
+
+    //Handle Input name
+    const handleInputName = (e)=>{setNewName(e.target.value)}
+    //Handle Input Number
+    const handleInputNumber = (e) =>{setNewNumber(e.target.value)}
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -27,65 +37,29 @@ const App = (props) => {
 
     if (!existing) {
       setPersons(persons.concat({ name: newName, number: newNumber }));
-      setNewNumber();
+      setNewNumber('');
     } else {
       alert(`${newName} is already added to phonebook`);
     }
 
     setNewName(" ");
   };
-  //filter person from the list of persons based on the value={search}
   
-  const filteredPerson = persons.filter((person) =>{
-    //indexOf->searching the index of string/character
-      return person.name.toLowerCase().indexOf(search) !== -1;
-    }
-  );
-  const personArray = filteredPerson.map((i, index) => (
-    <li key={index}>
-      {i.name}{' | '} {i.number}
-    </li>
-  ));
-
   return (
+
+
     <div className="App">
+    
       <h1 className="phonebook">Phonebook</h1>
-      <div className="search">
-      Search By Name:
-        <input
-          className="searchInput"
-          type="text"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-        </div>
+
+        <Filter handleFilter={handleFilter} search={search} />
         <h3>Add new contact</h3>
-        <br />
-      <form onSubmit={handleSubmit}>
-        name:
-        <input
-          className="inputName"
-          type="text"
-          value={newName}
-          onChange={e => setNewName(e.target.value)}
-        />
-        <br />
-        number:
-        <input
-          className="inputNumber"
-          type="text"
-          value={newNumber}
-          onChange={e => setNewNumber(e.target.value)}
-        />
-        <br />
-        <button type="submit" className="add">
-          Add
-        </button>
-      </form>
-      <div className="list">
+        <PersonForm handleInputName={handleInputName} handleInputNumber={handleInputNumber} handleSubmit={handleSubmit} newName={newName} newNumber={newNumber}/>
         <h2>Numbers</h2>
-        {personArray}
-      </div>
+
+         <Persons persons = {persons} search={search} /> 
+      
+      
     </div>
   );
 };
