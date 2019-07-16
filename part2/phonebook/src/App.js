@@ -1,24 +1,92 @@
-import React, { useState } from "react";
-import Filter  from './components/Filter';
-import PersonForm from './components/PersonForm';
-import Persons from './components/Persons';
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
+
 import "./App.css";
 
-const App = (props) => {
-  const [persons, setPersons] = useState([
-    { name: "Mesfin Tegegne ",number: '045-123456' },
-    { name: "Timiro Ali ",number: '046-234567' },
-    { name: "Nathan Mesfin ",number: '044-123000' },
-    { name: "Hidaya Baba ",number: '049-096456' }
+
+    //Filter Form
+   const  Filter = ({handleFilter, search}) => {
+      return (
   
-  ]);
+          <div className="search">
+          Search By Name:
+            <input
+              className="searchInput"
+              type="text"
+              value={search}
+              onChange={handleFilter}
+            />
+            </div>
+      )
+  }
+
+  //Person input form
+
+ const PersonForm = ({handleInputName,handleInputNumber,handleSubmit,newName,newNumber}) => {
+    return (
+        <div>
+            <form onSubmit={handleSubmit}>
+        name:
+        <input
+          className="inputName"
+          type="text"
+          value={newName}
+          onChange={handleInputName}
+        />
+        <br />
+        number:
+        <input
+          className="inputNumber"
+          type="text"
+          value={newNumber}
+          onChange={handleInputNumber}
+        />
+        <br />
+        <button type="submit" className="add">
+          Add
+        </button>
+      </form>
 
 
+        </div>
+    )
+}
+  //List of Persons
+  const Persons = ({persons,search}) =>{
+
+    //console.log(persons);
+    //filter person from the list of persons based on the value={search}
+  
+  const filteredPerson = persons.filter((person) =>{
+    //indexOf->searching the index of string/character
+      return person.name.toLowerCase().indexOf(search) !== -1;
+    }
+  );
+  const personArray = filteredPerson.map((i, index) => (
+    <li key={index}>
+      {i.name}{' | '} {i.number}
+    </li>
+  ));
+//console.log(personArray);
+
+    return(
+        <div className="list">
+        {personArray}
+      </div>
+
+    )
+
+  
+}
+  // App component
+
+const App = () => {
   //The newName state is meant
   //for controlling the form input element.
   const [newName, setNewName] = useState(" ");
-  const [newNumber, setNewNumber] = useState('0000');
+  const [newNumber, setNewNumber] = useState('00');
   const [search, setSearch] = useState(" ");
+  const [persons, setPersons] = useState([]);
   //Submit name
     //HandleFilter
     const handleFilter = (e)=>{ setSearch(e.target.value)}
@@ -43,7 +111,24 @@ const App = (props) => {
     }
 
     setNewName(" ");
+    setNewNumber('');
   };
+
+  //Fetch Person data using axios library
+  const hook = () =>{
+    console.log('effect');
+
+    axios.get('http://localhost:3001/persons')
+         .then(response =>{
+          console.log('resolved');
+
+          setPersons(response.data);
+           //console.log(persons);
+         })
+
+  }
+  useEffect(hook,[])
+
   
   return (
 

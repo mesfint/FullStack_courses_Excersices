@@ -1,5 +1,5 @@
 import React from "react";
-import Course from './components/Course';
+import Course from "./components/Course";
 
 import "./App.css";
 
@@ -58,7 +58,5 @@ const App = () => {
     </div>
   );
 };
-
-
 
 export default App;
