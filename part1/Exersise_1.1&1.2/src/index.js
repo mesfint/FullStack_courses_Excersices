@@ -1,11 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-{
-  {
-    /*1.5: course information step5*/
-  }
-}
-
+/*1.5: course information step5*/
 const App = () => {
   const total = 0;
 
@@ -14,17 +9,17 @@ const App = () => {
     parts: [
       {
         name: 'Fundamentals of React',
-        exercises: 10
+        exercises: 10,
       },
       {
         name: 'Using props to pass data',
-        exercises: 7
+        exercises: 7,
       },
       {
         name: 'State of a component',
-        exercises: 14
-      }
-    ]
+        exercises: 14,
+      },
+    ],
   };
 
   return (
@@ -35,7 +30,7 @@ const App = () => {
     </>
   );
 };
-const Header = props => {
+const Header = (props) => {
   console.log(props);
   return (
     <div>
@@ -43,7 +38,7 @@ const Header = props => {
     </div>
   );
 };
-const Content = props => {
+const Content = (props) => {
   return (
     <div>
       <p>{props.course.parts[0].name}</p>
@@ -52,7 +47,7 @@ const Content = props => {
     </div>
   );
 };
-const Total = props => {
+const Total = (props) => {
   return (
     <div>
       <p>
