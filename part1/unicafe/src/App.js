@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
+import React, { useState } from 'react';
 
-import "./App.css";
+import './App.css';
 
 const Statistic = ({ text, value, className }) => {
-  if (text === "positive") {
+  if (text === 'positive') {
     return (
       <div>
         {text}
@@ -15,51 +14,53 @@ const Statistic = ({ text, value, className }) => {
     return (
       <div>
         {text}
-        <span className={className}>{value}</span>
+        {value}
       </div>
     );
   }
 };
-const Statistics = props => {
+const Statistics = ({ good, bad, neutral, total, average, positive }) => {
   return (
     <div>
       <table className="table">
-        <tr>
-          <td>Good</td>
-          <td>
-            <Statistic className="g" value={props.good} />
-          </td>
-        </tr>
-        <tr>
-          <td>Bad</td>
-          <td>
-            <Statistic className="b" value={props.bad} />
-          </td>
-        </tr>
-        <tr>
-          <td>Neutral</td>
-          <td>
-            <Statistic className="n" value={props.neutral} />
-          </td>
-        </tr>
-        <tr>
-          <td>Total</td>
-          <td>
-            <Statistic className="n" value={props.total} />
-          </td>
-        </tr>
-        <tr>
-          <td>Average</td>
-          <td>
-            <Statistic className="b" value={props.average} />
-          </td>
-        </tr>
-        <tr>
-          <td>Positive</td>
-          <td>
-            <Statistic className="b" value={props.positive} />%
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>Good</td>
+            <td>
+              <Statistic className="g" value={good} />
+            </td>
+          </tr>
+          <tr>
+            <td>Bad</td>
+            <td>
+              <Statistic className="b" value={bad} />
+            </td>
+          </tr>
+          <tr>
+            <td>Neutral</td>
+            <td>
+              <Statistic className="n" value={neutral} />
+            </td>
+          </tr>
+          <tr>
+            <td>Total</td>
+            <td>
+              <Statistic className="n" value={total} />
+            </td>
+          </tr>
+          <tr>
+            <td>Average</td>
+            <td>
+              <Statistic className="b" value={average} />
+            </td>
+          </tr>
+          <tr>
+            <td>Positive</td>
+            <td>
+              <Statistic className="b" value={positive} />%
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
   );
@@ -72,25 +73,26 @@ const App = () => {
   const [bad, setBad] = useState(0);
   //const [result, setResult] = useState(0);
 
-  const goodHandleClick = () => {
+  const goodFeedBackHandleClick = () => {
     return setGood(good + 1);
   };
-  const neutralHandleClick = () => {
+  const neutralFeedBackHandleClick = () => {
     return setNeutral(neutral + 1);
   };
-  const badHandleClick = () => {
+  const badFeedBackHandleClick = () => {
     return setBad(bad + 1);
   };
 
-  const calcAverage = () => {
-    const calc = parseFloat(
-      (good * 1 + neutral * 0 + bad * -1) / (good + neutral + bad)
-    );
-    return calc;
+  const calcAverage = (a, b, c) => {
+    const sum = Number(a * 1 + b * -1 + c * 0);
+    let ave = sum / (a + b + c);
+
+    return ave.toFixed(2);
   };
-  const total = () => {
+
+  const positive = () => {
     const calc = parseFloat((good / (good + neutral + bad)) * 100);
-    return calc;
+    return calc.toFixed(2);
   };
 
   const Button = ({ onClick, text }) => (
@@ -100,23 +102,25 @@ const App = () => {
   );
 
   return (
-    <div className="App">
-      <h2>Give FeedBack!</h2>
-      <Button onClick={goodHandleClick} text="good" />
-      <Button onClick={badHandleClick} text="bad" />
-      <Button onClick={neutralHandleClick} text="neutral" />
+    <>
+      <div className="App">
+        <h2>Give FeedBack!</h2>
+        <Button onClick={goodFeedBackHandleClick} text="good" />
+        <Button onClick={badFeedBackHandleClick} text="bad" />
+        <Button onClick={neutralFeedBackHandleClick} text="neutral" />
 
-      <hr />
-      <h2>Statistics</h2>
-      <Statistics
-        good={good}
-        bad={bad}
-        neutral={neutral}
-        average={calcAverage()}
-        positive={total()}
-        total={good + neutral + bad}
-      />
-    </div>
+        <hr />
+        <h2>Statistics</h2>
+        <Statistics
+          good={good}
+          bad={bad}
+          neutral={neutral}
+          average={calcAverage(good, bad, neutral)}
+          positive={positive()}
+          total={good + neutral + bad}
+        />
+      </div>
+    </>
   );
 };
 

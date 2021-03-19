@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 /*1.5: course information step5*/
+
+/* rm -rf .git */
 const App = () => {
   const total = 0;
 
