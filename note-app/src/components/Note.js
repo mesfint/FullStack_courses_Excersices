@@ -28,7 +28,10 @@ export const Note = ({ note, notes, id, date, deleteNote }) => {
               description={item.content}
             />
 
-            <DeleteFilled onClick={handleDelete} />
+            <DeleteFilled
+              onClick={handleDelete}
+              style={{ fontSize: '1.3rem', color: '#08c' }}
+            />
           </List.Item>
         )}
       />

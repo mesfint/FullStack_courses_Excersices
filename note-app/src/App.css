@@ -13,10 +13,12 @@ li {
   width: 700px;
 }
 .submit {
-  padding: 5px;
-  background: #4cc9f0;
+  margin-left: 5px;
+  padding: 4px;
+  font-size: 1rem;
+  background: #08c;
   border: none;
-  color: #000;
+  color: #fff;
   cursor: pointer;
 }
 

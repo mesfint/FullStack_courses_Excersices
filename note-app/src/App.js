@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Note } from './components/Note';
 import styled from 'styled-components';
 import { Typography, Form, Input } from 'antd';
+import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons';
 import './App.css';
 
 const { Title } = Typography;
@@ -72,7 +73,11 @@ function App(props) {
         </Container>
         <div>
           <button onClick={() => setShowAll(!showAll)}>
-            show {showAll ? 'important' : 'all'}
+            {showAll ? (
+              <AppstoreOutlined style={{ fontSize: '1.5rem', color: '#08c' }} />
+            ) : (
+              <BarsOutlined style={{ fontSize: '1.5rem', color: '#08c' }} />
+            )}
           </button>
         </div>
         <ul>
