@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import { Note } from './components/Note';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Typography, Form, Input } from 'antd';
 import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons';
+import { Note } from './components/Note';
+
+import axios from 'axios'
+
 import './App.css';
 
 const { Title } = Typography;
@@ -14,12 +17,21 @@ const Container = styled.div({
   alignItems: 'center',
   border: '1px dashed #545454',
 });
-function App(props) {
-  const [notes, setNotes] = useState(props.notes);
+const  App=()=> {
+  const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
   const [showAll, setShowAll] = useState(true);
 
   //const {notes} = props;
+  useEffect(()=>{
+    axios
+    .get('http://localhost:3002/notes')
+    .then((res)=>{
+      setNotes(res.data);
+    })
+  },[])
+  console.log('render', notes.length, 'notes')
+
 
   const handleSubmit = () => {
     addNote();

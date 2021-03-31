@@ -4,7 +4,19 @@ import 'antd/dist/antd.css';
 
 import App from './App';
 
-const notes = [
+
+
+
+const rootElement = document.getElementById('root');
+ReactDOM.render(
+  <StrictMode>
+    <App  />
+  </StrictMode>,
+  rootElement
+);
+
+
+/* const notes = [
   {
     id: 1,
     content: 'HTML is Easy',
@@ -24,11 +36,4 @@ const notes = [
     important: false,
   },
 ];
-
-const rootElement = document.getElementById('root');
-ReactDOM.render(
-  <StrictMode>
-    <App notes={notes} />
-  </StrictMode>,
-  rootElement
-);
+ */
