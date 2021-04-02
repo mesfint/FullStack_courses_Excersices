@@ -4,7 +4,7 @@ import { Typography, Form, Input } from 'antd';
 import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons';
 import { Note } from './components/Note';
 
-import axios from 'axios'
+import axios from 'axios';
 
 import './App.css';
 
@@ -17,26 +17,24 @@ const Container = styled.div({
   alignItems: 'center',
   border: '1px dashed #545454',
 });
-const  App=()=> {
+const App = () => {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
   const [showAll, setShowAll] = useState(true);
 
   //const {notes} = props;
-  useEffect(()=>{
-    axios
-    .get('http://localhost:3002/notes')
-    .then((res)=>{
+  useEffect(() => {
+    axios.get('http://localhost:3002/notes').then((res) => {
       setNotes(res.data);
-    })
-  },[])
-  console.log('render', notes.length, 'notes')
-
+    });
+  }, []);
+  console.log('render', notes.length, 'notes');
 
   const handleSubmit = () => {
     addNote();
   };
 
+  //Add new notes
   const addNote = () => {
     //e.preventDefault();
     const noteObject = {
@@ -107,6 +105,6 @@ const  App=()=> {
       </div>
     </>
   );
-}
+};
 
 export default App;
