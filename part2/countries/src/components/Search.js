@@ -1,20 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Input } from 'antd';
 
-export const Search = ({ getQuery }) => {
-  const [text, setText] = useState('');
-
-  const handleSearch = (q) => {
-    setText(q);
-    getQuery(q);
-  };
-
+export const Search = ({ searchTerm, handleSearch }) => {
   return (
     <div>
       <form>
-        <input
+        <Input
           type="text"
-          value={text}
-          onChange={(e) => handleSearch(e.target.value)}
+          value={searchTerm}
+          onChange={handleSearch}
+          placeholder="Search for a country"
+          style={{ size: 'large' }}
         />
       </form>
     </div>
