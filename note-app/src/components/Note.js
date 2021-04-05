@@ -1,40 +1,25 @@
 import React from 'react';
-import { DeleteFilled } from '@ant-design/icons';
-import { List, Avatar } from 'antd';
 
-export const Note = ({ note, notes, id, date, deleteNote }) => {
-  const handleDelete = (id) => {
+export const Note = ({ note, toggleImportanceOf }) => {
+  const label = note.important ? 'make not important' : 'make important';
+
+  /*   const handleDelete = (id) => {
     deleteNote(note.id);
-  };
+  }; */
   return (
     <>
-      <List
-        itemLayout="horizontal"
-        size="large"
-        dataSource={notes}
-        renderItem={(item) => (
-          <List.Item>
-            <List.Item.Meta
-              avatar={
-                <Avatar
-                  src="https://via.placeholder.com/150
-
-                C/O https://placeholder.com/"
-                >
-                  {item.id}
-                </Avatar>
-              }
-              title={<a href="https://ant.design"> {item.date}</a>}
-              description={item.content}
-            />
-
-            <DeleteFilled
-              onClick={handleDelete}
-              style={{ fontSize: '1.3rem', color: '#08c' }}
-            />
-          </List.Item>
-        )}
-      />
+      <React.StrictMode>
+        <React.Fragment>
+          <li className="note">
+            {note.content}
+            <button onClick={toggleImportanceOf}>{label}</button>
+          </li>
+        </React.Fragment>
+      </React.StrictMode>
+      {/*    <DeleteFilled
+          onClick={handleDelete}
+          style={{ fontSize: '1.3rem', color: '#08c' }}
+        /> */}
     </>
   );
 };

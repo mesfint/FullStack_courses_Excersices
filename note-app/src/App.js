@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import axios from 'axios';
+import { Note } from './components/Note';
+import noteService from './services/notes';
+
 import { Typography, Form, Input } from 'antd';
 import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons';
-import { Note } from './components/Note';
-
-import axios from 'axios';
-
+import styled from 'styled-components';
 import './App.css';
 
 const { Title } = Typography;
@@ -24,7 +24,7 @@ const App = () => {
 
   //const {notes} = props;
   useEffect(() => {
-    axios.get('http://localhost:3002/notes').then((res) => {
+    noteService.getAll().then((res) => {
       setNotes(res.data);
     });
   }, []);
@@ -44,24 +44,40 @@ const App = () => {
       id: notes.length + 1,
     };
     //setNotes(notes.concat(noteObject));
-    setNotes([noteObject, ...notes]); //New note goes to top
+    /*    setNotes([noteObject, ...notes]); //New note goes to top
     console.log('notes =>', notes);
-    setNewNote('');
+    setNewNote(''); */
+
+    //Sending Data to the Server
+
+    axios.post(' http://localhost:3002/notes', noteObject).then((res) => {
+      setNotes([noteObject, ...notes]); //New note goes to top
+      console.log('notes =>', notes);
+      setNewNote('');
+    });
   };
   //Delete notes
-  const deleteNote = (id) => {
+  /*   const deleteNote = (id) => {
     const removedArr = [...notes].filter((note) => note.id !== id);
     console.log(removedArr);
     setNotes(removedArr);
-  };
+  }; */
 
-  const notesToShow = showAll
-    ? notes
-    : notes.filter((note) => note.important === true);
+  const notesToShow = showAll ? notes : notes.filter((note) => note.important);
 
   const handleNoteChange = (e) => {
     console.log(e.target.value);
     setNewNote(e.target.value);
+  };
+
+  const toggleImportanceOf = (id) => {
+    const url = ` http://localhost:3002/notes/${id}`;
+    const note = notes.find((n) => n.id === id);
+    const changedNote = { ...note, important: !note.important };
+
+    axios.put(url, changedNote).then((res) => {
+      setNotes(notes.map((note) => (note.id !== id ? note : res.data)));
+    });
   };
 
   return (
@@ -82,23 +98,43 @@ const App = () => {
           </Form>
         </Container>
         <div>
-          <button onClick={() => setShowAll(!showAll)}>
+          <button
+            style={{
+              border: '1px solid #c4c4c4',
+              paddingTop: '0px',
+              marginTop: '5px',
+              outline: 'none',
+              height: '30px',
+              width: '100px',
+              paddingBottom: '-10px',
+            }}
+            onClick={() => setShowAll(!showAll)}
+          >
             {showAll ? (
-              <AppstoreOutlined style={{ fontSize: '1.5rem', color: '#08c' }} />
+              <p
+                style={{
+                  fontSize: '1rem',
+                  color: '#08c',
+                }}
+              >
+                important
+              </p>
             ) : (
-              <BarsOutlined style={{ fontSize: '1.5rem', color: '#08c' }} />
+              <p style={{ fontSize: '1rem', color: '#08c' }}>all</p>
             )}
           </button>
+          <h3>{`   You have ${[...notes].length} notes `}</h3>
         </div>
         <ul>
           {notesToShow.map((note) => (
             <Note
               key={note.id}
               note={note}
-              notes={notes}
-              deleteNote={deleteNote}
-              date={note.date}
-              id={note.id}
+              toggleImportanceOf={() => toggleImportanceOf(note.id)}
+
+              /*  deleteNote={deleteNote} */
+              /*    date={note.date} */
+              /*  id={note.id} */
             />
           ))}
         </ul>

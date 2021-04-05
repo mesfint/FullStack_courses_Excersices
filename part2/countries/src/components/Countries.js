@@ -8,7 +8,7 @@ export const Countries = ({ countryDisplay, isLoading, setSearchTerm }) => {
   };
 
   if (countryDisplay.length >= 10) {
-    return <h3>Too many matches</h3>;
+    return null;
   } else if (countryDisplay.length < 10 && countryDisplay.length > 1) {
     return countryDisplay.map((country) => (
       <p key={country.name}>
