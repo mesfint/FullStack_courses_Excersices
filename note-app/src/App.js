@@ -24,36 +24,50 @@ const App = () => {
 
   //const {notes} = props;
   useEffect(() => {
-    noteService.getAll().then((res) => {
-      setNotes(res.data);
+    noteService.getAll().then((initialNotes) => {
+      setNotes(initialNotes);
     });
   }, []);
-  console.log('render', notes.length, 'notes');
 
-  const handleSubmit = () => {
-    addNote();
+  /*   const handleNoteChange = (e) => {
+    console.log(e.target.value);
+    setNewNote(e.target.value);
+  }; */
+
+  function handleInputChange(e) {
+    setNewNote(e.target.value);
+  }
+  const toggleImportanceOf = (id) => {
+    //const url = `http://localhost:3002/notes/${id}`;
+    const note = notes.find((n) => n.id === id);
+    const changedNote = { ...note, important: !note.important };
+
+    noteService
+      .update(id, changedNote)
+      .then((returnedNote) => {
+        setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)));
+      })
+      .catch((error) => {
+        alert(`the note '${note.content}' was already deleted from server`);
+        setNotes(notes.filter((n) => n.id !== id));
+      });
   };
 
   //Add new notes
-  const addNote = () => {
-    //e.preventDefault();
+  const addNote = (e) => {
+    e.preventDefault();
     const noteObject = {
       content: newNote,
       date: new Date().toISOString(),
-      important: Math.random() < 0.5,
-      id: notes.length + 1,
+      important: Math.random() > 0.5,
+      /* id: notes.length + 1 */
     };
-    //setNotes(notes.concat(noteObject));
-    /*    setNotes([noteObject, ...notes]); //New note goes to top
-    console.log('notes =>', notes);
-    setNewNote(''); */
 
-    //Sending Data to the Server
-
-    axios.post(' http://localhost:3002/notes', noteObject).then((res) => {
-      setNotes([noteObject, ...notes]); //New note goes to top
-      console.log('notes =>', notes);
-      setNewNote('');
+    noteService.create(noteObject).then((returnedNote) => {
+      if (newNote.length > 0) {
+        setNotes(notes.concat(returnedNote));
+        setNewNote('');
+      }
     });
   };
   //Delete notes
@@ -65,37 +79,20 @@ const App = () => {
 
   const notesToShow = showAll ? notes : notes.filter((note) => note.important);
 
-  const handleNoteChange = (e) => {
-    console.log(e.target.value);
-    setNewNote(e.target.value);
-  };
-
-  const toggleImportanceOf = (id) => {
-    const url = ` http://localhost:3002/notes/${id}`;
-    const note = notes.find((n) => n.id === id);
-    const changedNote = { ...note, important: !note.important };
-
-    axios.put(url, changedNote).then((res) => {
-      setNotes(notes.map((note) => (note.id !== id ? note : res.data)));
-    });
-  };
-
   return (
     <>
       <div className="App">
         <Title>Notes</Title>
         <Container>
-          <Form>
-            <Input
+          <form onSubmit={addNote}>
+            <input
               className="input"
               value={newNote}
-              onInput={handleNoteChange}
+              onChange={handleInputChange}
               placeholder="Add notes..."
             />
-            <button className="submit" onClick={handleSubmit}>
-              Save note
-            </button>
-          </Form>
+            <button className="submit">Save note</button>
+          </form>
         </Container>
         <div>
           <button
@@ -123,7 +120,7 @@ const App = () => {
               <p style={{ fontSize: '1rem', color: '#08c' }}>all</p>
             )}
           </button>
-          <h3>{`   You have ${[...notes].length} notes `}</h3>
+          <h3>{`   You have ${notes.length} notes `}</h3>
         </div>
         <ul>
           {notesToShow.map((note) => (
