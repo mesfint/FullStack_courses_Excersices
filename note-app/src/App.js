@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Note } from './components/Note';
 import noteService from './services/notes';
+import { Notification } from './components/Notification';
+import { Footer } from './components/Footer';
 
-import { Typography, Form, Input } from 'antd';
+import { Typography, Form, Input, Divider } from 'antd';
 import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import './App.css';
-
-const { Title } = Typography;
 
 const Container = styled.div({
   height: '25vh',
@@ -17,10 +17,21 @@ const Container = styled.div({
   alignItems: 'center',
   border: '1px dashed #545454',
 });
+const Button = styled.button({
+  border: '1px solid #c4c4c4',
+  paddingTop: '0px',
+  marginTop: '5px',
+  outline: 'none',
+  height: '30px',
+  width: '100px',
+  paddingBottom: '-10px',
+});
+
 const App = () => {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
   const [showAll, setShowAll] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('some error happened...');
 
   //const {notes} = props;
   useEffect(() => {
@@ -29,17 +40,12 @@ const App = () => {
     });
   }, []);
 
-  /*   const handleNoteChange = (e) => {
-    console.log(e.target.value);
-    setNewNote(e.target.value);
-  }; */
-
   function handleInputChange(e) {
     setNewNote(e.target.value);
   }
   const toggleImportanceOf = (id) => {
     //const url = `http://localhost:3002/notes/${id}`;
-    const note = notes.find((n) => n.id === id);
+    const note = notes.find((note) => note.id === id);
     const changedNote = { ...note, important: !note.important };
 
     noteService
@@ -48,8 +54,13 @@ const App = () => {
         setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)));
       })
       .catch((error) => {
-        alert(`the note '${note.content}' was already deleted from server`);
-        setNotes(notes.filter((n) => n.id !== id));
+        setErrorMessage(
+          `Note '${note.content}' was  already deleted from server`
+        );
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 1000);
+        setNotes(notes.filter((note) => note.id !== id));
       });
   };
 
@@ -70,19 +81,14 @@ const App = () => {
       }
     });
   };
-  //Delete notes
-  /*   const deleteNote = (id) => {
-    const removedArr = [...notes].filter((note) => note.id !== id);
-    console.log(removedArr);
-    setNotes(removedArr);
-  }; */
 
   const notesToShow = showAll ? notes : notes.filter((note) => note.important);
 
   return (
     <>
       <div className="App">
-        <Title>Notes</Title>
+        <h1>Notes</h1>
+        <Notification message={errorMessage} />
         <Container>
           <form onSubmit={addNote}>
             <input
@@ -91,22 +97,11 @@ const App = () => {
               onChange={handleInputChange}
               placeholder="Add notes..."
             />
-            <button className="submit">Save note</button>
+            <Button className="submit">Save note</Button>
           </form>
         </Container>
         <div>
-          <button
-            style={{
-              border: '1px solid #c4c4c4',
-              paddingTop: '0px',
-              marginTop: '5px',
-              outline: 'none',
-              height: '30px',
-              width: '100px',
-              paddingBottom: '-10px',
-            }}
-            onClick={() => setShowAll(!showAll)}
-          >
+          <Button onClick={() => setShowAll(!showAll)}>
             {showAll ? (
               <p
                 style={{
@@ -119,7 +114,7 @@ const App = () => {
             ) : (
               <p style={{ fontSize: '1rem', color: '#08c' }}>all</p>
             )}
-          </button>
+          </Button>
           <h3>{`   You have ${notes.length} notes `}</h3>
         </div>
         <ul>
@@ -135,6 +130,17 @@ const App = () => {
             />
           ))}
         </ul>
+
+        <div>
+          <Divider plain></Divider>
+          <a href="https://github.com/mesfint/FullStack_courses_Excersices/tree/master/note-app">
+            Source Code
+          </a>
+        </div>
+        <div>
+          <Footer />
+          Made with ❤️ &nbsp; by MesfinT ©2021 ✌️
+        </div>
       </div>
     </>
   );
