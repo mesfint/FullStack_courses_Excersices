@@ -23,6 +23,7 @@ const Title = styled.h1`
   text-align: center;
 `;
 
+// npx json-server --port 3003 --watch db.json
 const App = () => {
   //The newName state is meant
   //for controlling the form input element.
