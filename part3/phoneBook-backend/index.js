@@ -51,6 +51,24 @@ app.delete('/api/persons/:id', (request, response) => {
   response.status(204).end();
 });
 
+//Post entry
+//Generate Random Id
+const randomId = () => {
+  return Math.round(Math.random() * 10000000);
+};
+
+app.post('/api/persons', (request, response) => {
+  const body = request.body;
+
+  const person = {
+    name: body.name,
+    number: body.number,
+    id: randomId(),
+  };
+  persons = [...persons, person];
+  response.json(person);
+});
+
 app.get('/info', (request, response) => {
   response.send(
     'Phonebook has info for  ' +
