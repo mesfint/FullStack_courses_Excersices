@@ -31,7 +31,7 @@ app.get('/', (request, response) => {
 app.get('/api/persons', (request, response) => {
   response.json(persons);
 });
-//single phonebook entry
+//get single phonebook entry
 
 app.get('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id);
@@ -65,6 +65,25 @@ app.post('/api/persons', (request, response) => {
     number: body.number,
     id: randomId(),
   };
+
+  const existedName = persons.some((person) => person.name === body.name);
+
+  if (!body.name) {
+    return response.status(400).json({
+      error: 'name is missing',
+    });
+  }
+  if (!body.number) {
+    return response.status(400).json({
+      error: 'number is missing',
+    });
+  }
+
+  if (existedName) {
+    return response.status(400).json({
+      error: 'name must be unique',
+    });
+  }
   persons = [...persons, person];
   response.json(person);
 });
