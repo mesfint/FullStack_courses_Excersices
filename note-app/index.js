@@ -35,6 +35,12 @@ let notes = [
     date: '2020-01-10T19:20:14.298Z',
     important: true,
   },
+  {
+    id: 4,
+    content: 'Deploy backend app in heroku',
+    date: '2020-01-10T19:20:14.298Z',
+    important: true,
+  },
 ];
 
 app.get('/', (req, res) => {
