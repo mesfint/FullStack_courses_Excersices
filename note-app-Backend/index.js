@@ -20,6 +20,12 @@ let notes = [
     date: '2020-01-10T19:20:14.298Z',
     important: true,
   },
+  {
+    id: 4,
+    content: 'Deploy app to the internet',
+    date: '2020-01-10T18:39:34.091Z',
+    important: true,
+  },
 ];
 
 app.get('/', (req, res) => {
@@ -41,6 +47,7 @@ app.get('/api/notes/:id', (request, response) => {
   }
 });
 
-const PORT = 3001;
-app.listen(PORT);
-console.log(`Server running on port ${PORT}`);
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
