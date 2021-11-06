@@ -1,35 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Note } from './components/Note';
-import noteService from './services/notes';
-import { Notification } from './components/Notification';
-import { Footer } from './components/Footer';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Note } from "./components/Note";
+import noteService from "./services/notes";
+import { Notification } from "./components/Notification";
+import { Footer } from "./components/Footer";
 
-import { Typography, Form, Input, Divider } from 'antd';
-import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons';
-import styled from 'styled-components';
-import './App.css';
+import { Typography, Form, Input, Divider } from "antd";
+import { AppstoreOutlined, BarsOutlined } from "@ant-design/icons";
+import styled from "styled-components";
+import "./App.css";
 
 const Container = styled.div({
-  height: '25vh',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  border: '1px dashed #545454',
+  height: "25vh",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  border: "1px dashed #545454",
 });
 const Button = styled.button({
-  border: '1px solid #c4c4c4',
-  paddingTop: '0px',
-  marginTop: '5px',
-  outline: 'none',
-  height: '30px',
-  width: '100px',
-  paddingBottom: '-10px',
+  border: "1px solid #c4c4c4",
+  paddingTop: "0px",
+  marginTop: "5px",
+  outline: "none",
+  height: "30px",
+  width: "100px",
+  paddingBottom: "-10px",
 });
 
 const App = () => {
   const [notes, setNotes] = useState([]);
-  const [newNote, setNewNote] = useState('');
+  const [newNote, setNewNote] = useState("");
   const [showAll, setShowAll] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -77,7 +77,7 @@ const App = () => {
     noteService.create(noteObject).then((returnedNote) => {
       if (newNote.length > 0) {
         setNotes(notes.concat(returnedNote));
-        setNewNote('');
+        setNewNote("");
       }
     });
   };
@@ -87,7 +87,7 @@ const App = () => {
   return (
     <>
       <div className="App">
-        <h1>Notes</h1>
+        <h1>Notes!</h1>
         <Notification message={errorMessage} />
         <Container>
           <form onSubmit={addNote}>
@@ -105,14 +105,14 @@ const App = () => {
             {showAll ? (
               <p
                 style={{
-                  fontSize: '1rem',
-                  color: '#08c',
+                  fontSize: "1rem",
+                  color: "#08c",
                 }}
               >
                 important
               </p>
             ) : (
-              <p style={{ fontSize: '1rem', color: '#08c' }}>all</p>
+              <p style={{ fontSize: "1rem", color: "#08c" }}>all</p>
             )}
           </Button>
           <h3>{`   You have ${notes.length} notes `}</h3>
