@@ -1,0 +1,13 @@
+.display__country {
+  display: flex;
+  margin: 10px auto 20px -10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.search__Input {
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,16 +1,22 @@
 import React from "react";
-import { Row, Col, Alert, Popover } from "antd";
+import { Row, Col, Card } from "antd";
+import styled from "styled-components";
 import { WeatherData } from "./WeatherData";
+
+const Container = styled.div({
+  height: "auto",
+  display: "flex",
+  width: "50%",
+  margin: "0 460px",
+  justifyContent: "center",
+  flexDirection: "column",
+  alignItems: "left",
+});
 
 export const Countries = ({ countryDisplay, isLoading, setSearchTerm }) => {
   const handleCountryShow = (name) => {
     setSearchTerm(name);
   };
-  const content = (
-    <div>
-      <Alert message="A lot of result please specify" type="error" />;
-    </div>
-  );
 
   if (countryDisplay.length >= 10) {
     return null;
@@ -25,7 +31,7 @@ export const Countries = ({ countryDisplay, isLoading, setSearchTerm }) => {
     ));
   } else {
     return countryDisplay.map((country) => (
-      <div key={country.name}>
+      <div className="display__country" key={country.name}>
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
           <Col span={6} order={4}>
             <WeatherData city={country.capital} />

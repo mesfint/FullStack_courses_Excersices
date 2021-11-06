@@ -1,16 +1,16 @@
-import React from 'react';
-import { Input } from 'antd';
+import React from "react";
+import { Input } from "antd";
 
 export const Search = ({ searchTerm, handleSearch }) => {
   return (
     <div>
-      <form>
+      <form className="search__Input">
         <Input
           type="text"
           value={searchTerm}
           onChange={handleSearch}
           placeholder="Search for a country"
-          style={{ size: 'large' }}
+          style={{ size: "large" }}
         />
       </form>
     </div>
