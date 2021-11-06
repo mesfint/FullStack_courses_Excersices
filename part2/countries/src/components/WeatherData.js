@@ -15,7 +15,7 @@ export const WeatherData = ({ city }) => {
   useEffect(() => {
     axios
       .get(
-        `http://api.weatherstack.com/current?access_key=727db2393f02cd30d92df223c0517239&query=${city}&units=m`
+        `http://api.weatherstack.com/current?access_key=${API_KEY}&query=${city}&units=m`
       )
       .then((res) => {
         setWeather({
