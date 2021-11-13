@@ -20,7 +20,8 @@ const deletePersons = (id) => {
   return request.then((response) => response.data);
 };
 
-/* Since the names of the keys and the assigned variables are the same, we can write the object definition with more compact syntax: */
+/* Since the names of the keys and the assigned variables are the same,
+ we can write the object definition with more compact syntax: */
 export default {
   getAll,
   createPersons,

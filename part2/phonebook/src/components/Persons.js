@@ -1,6 +1,6 @@
-import React from 'react';
-import { List, Avatar } from 'antd';
-import styled from 'styled-components';
+import React from "react";
+import { List, Avatar } from "antd";
+import styled from "styled-components";
 
 const Container = styled.section`
   padding: 0.3rem;

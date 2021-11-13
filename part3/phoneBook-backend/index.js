@@ -1,5 +1,11 @@
-const express = require("express");
-const morgan = require("morgan");
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import express from "express";
+import morgan from "morgan";
+import Person from "./models/person.js";
+
+dotenv.config({ path: ".env" });
+
 const app = express();
 app.use(express.json());
 
@@ -8,27 +14,6 @@ morgan.token("body", (req) => JSON.stringify(req.body));
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms :body")
 );
-let persons = [
-  {
-    id: 1,
-    name: "Arto Hellas",
-    number: "040-123456",
-  },
-  {
-    id: 2,
-    name: "Dan Abramov",
-    number: "045-9087456",
-  },
-  {
-    id: 3,
-    name: "Mary Poppendick",
-    number: "39-23-3456666",
-  },
-];
-// const person = {
-//   time: new Date(),
-//   length: Object.keys(persons).length,
-// };
 
 app.get("/", (request, response) => {
   response.send("<h1>Hello World!</h1>");
@@ -41,18 +26,24 @@ app.get("/", (request, response) => {
 // });
 
 app.get("/api/persons", (req, res) => {
-  res.json(persons);
+  Person.find({}).then((persons) => {
+    res.json(persons);
+  });
 });
 
 //Respond a single person
 
 app.get("/api/persons/:id", (req, res) => {
-  const id = req.params.id;
-  const person = persons.find((n) => n.id == id);
-  if (person) {
+  // const id = req.params.id;
+  // const person = persons.find((n) => n.id == id);
+  // if (person) {
+  //   res.json(person);
+  // }
+  // res.status(404).send("No contact found");
+
+  Person.findById(req.params.id).then((person) => {
     res.json(person);
-  }
-  res.status(404).send("No contact found");
+  });
 });
 
 // //get single phonebook entry
@@ -141,7 +132,7 @@ app.get("/info", (request, response) => {
   );
 });
 
-const PORT = 3002;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Form, Input, Button } from 'antd';
+import React from "react";
+import { Form, Input, Button } from "antd";
 
 const layout = {
   labelCol: {
@@ -11,10 +11,10 @@ const layout = {
 };
 
 const validateMessages = {
-  required: '${label} is required!',
+  required: "${label} is required!",
   types: {
-    email: '${label} is not a valid email!',
-    number: '${label} is not a valid number!',
+    email: "${label} is not a valid email!",
+    number: "${label} is not a valid number!",
   },
 };
 
@@ -38,7 +38,7 @@ export const PersonForm = ({
         validateMessages={validateMessages}
       >
         <Form.Item
-          name={['user', 'name']}
+          name={["user", "name"]}
           label="Name"
           rules={[
             {
@@ -57,14 +57,14 @@ export const PersonForm = ({
           name="phone"
           label="Phone Number"
           rules={[
-            { required: true, message: 'Please input your phone number!' },
+            { required: true, message: "Please input your phone number!" },
           ]}
         >
           <Input
             placeholder="input phone number"
             value={newNumber}
             onChange={handleInputNumber}
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
           />
         </Form.Item>
 
