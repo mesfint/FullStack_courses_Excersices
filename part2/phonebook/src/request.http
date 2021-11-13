@@ -1,0 +1,7 @@
+POST https://phonebook-backend-part33.herokuapp.com/api/persons
+Content-Type: application/json
+
+{
+   "name": "Hidity",
+"number": "7584594578" 
+}

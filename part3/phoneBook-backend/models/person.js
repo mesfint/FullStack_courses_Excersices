@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import uniqueValidator from "mongoose-unique-validator";
 
 dotenv.config({ path: ".env" });
 
@@ -16,9 +17,21 @@ mongoose
   });
 
 const personSchema = new mongoose.Schema({
-  name: String,
-  number: Number,
+  name: {
+    type: String,
+    minlength: 3,
+    required: true,
+    unique: true,
+  },
+  number: {
+    type: Number,
+    required: true,
+    unique: true,
+    min: 8,
+  },
 });
+//Apply the uniqueValidator plugin to schema
+personSchema.plugin(uniqueValidator);
 
 //To modify the output from _id to id
 personSchema.set("toJSON", {

@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import cors from "cors";
 import express from "express";
 import morgan from "morgan";
 import Person from "./models/person.js";
@@ -7,6 +8,7 @@ import Person from "./models/person.js";
 dotenv.config({ path: ".env" });
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 morgan.token("body", (req) => JSON.stringify(req.body));
@@ -186,6 +188,8 @@ const errorHandler = (error, req, res, next) => {
 
   if (error.name === "CastError") {
     return res.status(400).send({ error: "malformatted id" });
+  } else if (error.name === "ValidationError") {
+    return response.status(400).json({ error: error.message });
   }
 
   next(error);
