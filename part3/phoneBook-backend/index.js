@@ -33,7 +33,7 @@ app.get("/api/persons", (req, res) => {
 
 //Respond a single person
 
-app.get("/api/persons/:id", (req, res) => {
+app.get("/api/persons/:id", (req, res, next) => {
   // const id = req.params.id;
   // const person = persons.find((n) => n.id == id);
   // if (person) {
@@ -41,9 +41,15 @@ app.get("/api/persons/:id", (req, res) => {
   // }
   // res.status(404).send("No contact found");
 
-  Person.findById(req.params.id).then((person) => {
-    res.json(person);
-  });
+  Person.findById(req.params.id)
+    .then((person) => {
+      if (person) {
+        res.json(person);
+      } else {
+        res.status(404).end();
+      }
+    })
+    .catch((error) => next(error));
 });
 
 // //get single phonebook entry
@@ -60,10 +66,14 @@ app.get("/api/persons/:id", (req, res) => {
 // });
 
 //delete a single contact
-app.delete("/api/persons/:id", (req, res) => {
-  const id = +req.params.id;
-  const filteredContact = persons.filter((n) => n.id !== id);
-  res.json(filteredContact);
+app.delete("/api/persons/:id", (req, res, next) => {
+  Person.findByIdAndRemove(req.params.id)
+    .then(() => res.json(204))
+    .catch((error) => next(error));
+
+  // const id = +req.params.id;
+  // const filteredContact = persons.filter((n) => n.id !== id);
+  // res.json(filteredContact);
 });
 
 // //Delete single entry
@@ -91,35 +101,67 @@ const randomId = () => {
   return Math.round(Math.random() * 10000000);
 };
 
-app.post("/api/persons", (request, response) => {
-  const body = request.body;
+app.put("/api/persons/:id", (req, res, next) => {
+  const body = req.body;
 
   const person = {
     name: body.name,
-    number: body.number,
-    id: randomId(),
+    content: body.content,
   };
+  //  {new: true} will cause our event handler to be called with the new modified document instead of the original.
+  Person.findByIdAndUpdate(req.params.id, person, { new: true })
+    .then((updatedPerson) => {
+      res.json(updatedPerson);
+    })
+    .catch((error) => next(error));
+});
 
-  const existedName = persons.some((person) => person.name === body.name);
-
-  if (!body.name) {
-    return response.status(400).json({
+app.post("/api/persons", (req, res) => {
+  const body = req.body;
+  if (body.name === undefined) {
+    return resp.status(400).json({
       error: "name is missing",
     });
   }
-  if (!body.number) {
-    return response.status(400).json({
+  if (body.number === undefined) {
+    return res.status(400).json({
       error: "number is missing",
     });
   }
+  const person = new Person({
+    name: body.name,
+    number: body.number,
+  });
+  person.save().then((savedPerson) => {
+    res.json(savedPerson);
+  });
 
-  if (existedName) {
-    return response.status(400).json({
-      error: "name must be unique",
-    });
-  }
-  persons = [...persons, person];
-  response.json(person);
+  // const person = {
+  //   name: body.name,
+  //   number: body.number,
+  //   id: randomId(),
+  // };
+
+  // const existedName = persons.some((person) => person.name === body.name);
+
+  // if (!body.name) {
+  //   return response.status(400).json({
+  //     error: "name is missing",
+  //   });
+  // }
+  // if (!body.number) {
+  //   return response.status(400).json({
+  //     error: "number is missing",
+  //   });
+  // }
+
+  // if (existedName) {
+  //   return response.status(400).json({
+  //     error: "name must be unique",
+  //   });
+  // }
+  // persons = [...persons, person];
+  // response.json(person);
 });
 
 app.get("/info", (request, response) => {
@@ -131,6 +173,26 @@ app.get("/info", (request, response) => {
       person.time
   );
 });
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: "unknown endpoint" });
+};
+
+// handler of requests with unknown endpoint
+app.use(unknownEndpoint);
+
+const errorHandler = (error, req, res, next) => {
+  console.error(error.message);
+
+  if (error.name === "CastError") {
+    return res.status(400).send({ error: "malformatted id" });
+  }
+
+  next(error);
+};
+
+// this has to be the last loaded middleware.
+app.use(errorHandler);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
