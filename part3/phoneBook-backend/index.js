@@ -8,7 +8,9 @@ import Person from "./models/person.js";
 dotenv.config({ path: ".env" });
 
 const app = express();
+app.use(express.static("build"));
 app.use(cors());
+
 app.use(express.json());
 
 morgan.token("body", (req) => JSON.stringify(req.body));
