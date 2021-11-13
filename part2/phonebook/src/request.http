@@ -5,3 +5,9 @@ Content-Type: application/json
    "name": "Hidity",
 "number": "7584594578" 
 }
+
+###
+GET https://phonebook-backend-part33.herokuapp.com/api/persons
+
+###
+DELETE https://phonebook-backend-part33.herokuapp.com/api/persons/4
