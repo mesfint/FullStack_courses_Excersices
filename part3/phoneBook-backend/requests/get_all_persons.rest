@@ -1,4 +1,4 @@
-POST    http://localhost:3002/api/persons/ 
+POST    http://localhost:5000/api/persons/ 
 Content-Type: application/json
 
 {
@@ -6,16 +6,16 @@ Content-Type: application/json
     "number":"6857"
 }
 ###
-GET  http://localhost:3002/api/persons/
+GET  http://localhost:5000/api/persons/
 
 ###
-GET  http://localhost:3002/api/persons/618f67492c7ee21cda1efdb3
+GET  http://localhost:5000/api/persons/618f67492c7ee21cda1efdb3
 
 ###
-DELETE  http://localhost:3002/api/persons/618f67af21d9567ea3f21fbb
+DELETE  http://localhost:5000/api/persons/618f67af21d9567ea3f21fbb
 
 ###
-PUT  http://localhost:3002/api/persons/618f67ef02b1b72947780f04
+PUT  http://localhost:5000/api/persons/618f67ef02b1b72947780f04
 
 {
     "name":"Nathan Mengesha",
